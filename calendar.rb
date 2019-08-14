@@ -31,15 +31,35 @@ class Calendar
       end
       week.push(day)
     end
+    month.push(week)
 
     offset = day_of_first_this_month.wday - start_wday
     offset.times do |i|
-      month.first.unshift(day_of_first_this_month - (i + 1))
+      month.first.unshift("  ")
     end
     month
   end
 
   def outputs(start_wday = 0)
+    label = day_of_weeks(start_wday).join(" ")
+    p label
+    weeks = days(start_wday).each do |week|
+      week.two_digits
+      p week.two_digits.join(" ")
+    end
+  end
+end
+
+class Array
+  def two_digits
+    new_arr = self.map do |item|
+      if item.kind_of?(Date)
+        item.day.to_s.rjust(2)
+      else
+        item.to_s.rjust(2)
+      end
+    end
+    new_arr
   end
 end
 
